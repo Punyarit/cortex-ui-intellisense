@@ -9,7 +9,12 @@ const propertyValuesMap = {
     c: colors_1.colors,
     shadow: ['1dp', '2dp', '4dp', '6dp', '8dp', '12dp', '20dp'],
     opacity: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
-    border: [`1px solid ${colors_1.colors[0]}`],
+    border: colors_1.borderValues,
+    'border-left': colors_1.borderValues,
+    'border-top': colors_1.borderValues,
+    'border-right': colors_1.borderValues,
+    'border-bottom': colors_1.borderValues,
+    outline: colors_1.borderValues,
     // ... Add mappings for other properties here
 };
 function provideStateCompletionItems(attrValue) {

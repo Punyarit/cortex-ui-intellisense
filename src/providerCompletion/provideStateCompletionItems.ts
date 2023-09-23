@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { colors } from '../constants/colors';
+import { borderValues, colors } from '../constants/colors';
 
 // Step 1: Define a mapping between property names and their possible values.
 const propertyValuesMap = {
@@ -7,7 +7,12 @@ const propertyValuesMap = {
   c: colors,
   shadow: ['1dp', '2dp', '4dp', '6dp', '8dp', '12dp', '20dp'],
   opacity: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
-  border: [`1px solid ${colors[0]}`],
+  border: borderValues,
+  'border-left': borderValues,
+  'border-top': borderValues,
+  'border-right': borderValues,
+  'border-bottom': borderValues,
+  outline: borderValues,
   // ... Add mappings for other properties here
 };
 export function provideStateCompletionItems(attrValue: string): vscode.CompletionItem[] {

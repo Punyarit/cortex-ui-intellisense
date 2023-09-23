@@ -57,3 +57,26 @@ export const colors = [
   ...systemTextColors,
   ...systemBorderColors,
 ];
+
+const borderStyles = [
+  'dotted',
+  'dashed',
+  'solid',
+  'double',
+  'groove',
+  'ridge',
+  'inset',
+  'outset',
+] as const;
+
+const generateBorderValues = (borderStyles: ReadonlyArray<string>, colors: string[]) => {
+  let borderValues: string[] = [];
+  for (let style of borderStyles) {
+    for (let color of colors) {
+      borderValues.push(`1px ${style} ${color}`);
+    }
+  }
+  return borderValues;
+};
+
+export const borderValues = generateBorderValues(borderStyles, colors);

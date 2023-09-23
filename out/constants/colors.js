@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.colors = void 0;
+exports.borderValues = exports.colors = void 0;
 const shades = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
 const colorNames = [
     'gray',
@@ -40,3 +40,23 @@ exports.colors = [
     ...systemTextColors,
     ...systemBorderColors,
 ];
+const borderStyles = [
+    'dotted',
+    'dashed',
+    'solid',
+    'double',
+    'groove',
+    'ridge',
+    'inset',
+    'outset',
+];
+const generateBorderValues = (borderStyles, colors) => {
+    let borderValues = [];
+    for (let style of borderStyles) {
+        for (let color of colors) {
+            borderValues.push(`1px ${style} ${color}`);
+        }
+    }
+    return borderValues;
+};
+exports.borderValues = generateBorderValues(borderStyles, exports.colors);
