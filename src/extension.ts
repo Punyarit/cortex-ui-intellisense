@@ -123,7 +123,7 @@ export function activate(context: vscode.ExtensionContext) {
           }
         },
       },
-      ';', // Trigger character
+      ' ', // Trigger character
       '"' // Additional trigger character
     )
   );

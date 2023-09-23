@@ -109,7 +109,7 @@ function activate(context) {
                 return completionItems;
             }
         },
-    }, ';', // Trigger character
+    }, ' ', // Trigger character
     '"' // Additional trigger character
     ));
 }
