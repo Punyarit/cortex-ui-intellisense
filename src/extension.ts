@@ -1,100 +1,6 @@
 import * as vscode from 'vscode';
-
-function provideBreakpointCompletionItems(attrValue: string): vscode.CompletionItem[] {
-  const displayGroup = ['block', 'inline', 'inline-block', 'flex', 'inline-flex', 'grid', 'none'];
-  const justifyGroup = [
-    'justify-start',
-    'justify-center',
-    'justify-end',
-    'justify-between',
-    'justify-around',
-    'justify-evenly',
-  ];
-  const itemsGroup = [
-    'items-start',
-    'items-end',
-    'items-center',
-    'items-baseline',
-    'items-stretch',
-  ];
-  const propertyList = [
-    'p',
-    'pt',
-    'pr',
-    'pb',
-    'pl',
-    'px',
-    'py',
-    'gap',
-    'basis',
-    'transform',
-    'left',
-    'top',
-    'right',
-    'bottom',
-    'm',
-    'mt',
-    'mr',
-    'mb',
-    'ml',
-    'mx',
-    'my',
-    'w',
-    'min-w',
-    'max-w',
-    'h',
-    'min-h',
-    'max-h',
-    'col-gap',
-    'row-gap',
-    'grid-cols',
-    'col-span',
-    'col-start',
-    'col-end',
-    'grid-rows',
-    'row-span',
-    'row-start',
-    'row-end',
-  ];
-
-  const wordsUsed = attrValue
-    .split(';')
-    .map((word) => word.trim())
-    .filter(Boolean); // Get all words used so far
-
-  let suggestions = [...displayGroup, ...justifyGroup, ...itemsGroup, ...propertyList]; // Start with all suggestions
-
-  // Remove suggestions from a group if one from that group is already used
-  if (wordsUsed.some((word) => displayGroup.includes(word))) {
-    suggestions = suggestions.filter((word) => !displayGroup.includes(word));
-  }
-  if (wordsUsed.some((word) => justifyGroup.includes(word))) {
-    suggestions = suggestions.filter((word) => !justifyGroup.includes(word));
-  }
-  if (wordsUsed.some((word) => itemsGroup.includes(word))) {
-    suggestions = suggestions.filter((word) => !itemsGroup.includes(word));
-  }
-
-  // Remove property suggestions if they've already been used
-  wordsUsed.forEach((word) => {
-    const property = word.split(':')[0];
-    suggestions = suggestions.filter((suggestion) => suggestion !== property);
-  });
-
-  // Map suggestions to an array of CompletionItem objects
-  const completionItems = suggestions.map((word) => {
-    const completionItem = new vscode.CompletionItem(word, vscode.CompletionItemKind.Text);
-    // For properties, append a colon
-    if (propertyList.includes(word)) {
-      completionItem.insertText = word + ':';
-    } else {
-      completionItem.insertText = word;
-    }
-    return completionItem;
-  });
-
-  return completionItems;
-}
+import { provideBreakpointCompletionItems } from './providerCompletion/provideBreakpointCompletionItems';
+import { provideStateCompletionItems } from './providerCompletion/provideStateCompletionItems'
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -104,17 +10,27 @@ export function activate(context: vscode.ExtensionContext) {
         provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
           const line = document.lineAt(position);
           const lineText = line.text.substring(0, position.character);
-          const regex = /(?:xs|sm|md|lg|xl)=["']([^"']*)$/;
-          const match = lineText.match(regex);
 
-          if (match) {
-            const attrValue = match[1]; // Get the value of the attribute
-            return provideBreakpointCompletionItems(attrValue);
+          // Check for breakpoints
+          const breakpointRegex = /(?:xs|sm|md|lg|xl)=["']([^"']*)$/;
+          const breakpointMatch = lineText.match(breakpointRegex);
+          if (breakpointMatch) {
+            const attrValue = breakpointMatch[1];
+            return provideBreakpointCompletionItems(attrValue); // Assuming this function is defined elsewhere
+          }
+
+          // Check for state attributes
+          const stateRegex = /(?:active|focus|focus-within|hover)=["']([^"']*)$/;
+          const stateMatch = lineText.match(stateRegex);
+          if (stateMatch) {
+            const attrValue = stateMatch[1];
+            return provideStateCompletionItems(attrValue);
           }
         },
       },
       ' ', // Trigger character
-      '"' // Additional trigger character
+      '"', // Additional trigger character
+      ':' // Additional trigger character
     )
   );
 }
