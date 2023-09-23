@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { allTextDecorationValues, borderValues, colors } from '../constants/colors';
+import { allTextDecorationValues, borderValues, colors } from '../constants/propertyValues';
 
 // Step 1: Define a mapping between property names and their possible values.
 const propertyValuesMap = {
