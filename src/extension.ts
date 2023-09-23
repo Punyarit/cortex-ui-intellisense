@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { provideBreakpointCompletionItems } from './providerCompletion/provideBreakpointCompletionItems';
-import { provideStateCompletionItems } from './providerCompletion/provideStateCompletionItems'
+import { provideStateCompletionItems } from './providerCompletion/provideStateCompletionItems';
+import { providePropertyCompletionItems } from './providerCompletion/providePropertyCompletionItems'; // Assume this is the path to your function
 
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -16,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
           const breakpointMatch = lineText.match(breakpointRegex);
           if (breakpointMatch) {
             const attrValue = breakpointMatch[1];
-            return provideBreakpointCompletionItems(attrValue); // Assuming this function is defined elsewhere
+            return provideBreakpointCompletionItems(attrValue);
           }
 
           // Check for state attributes
@@ -25,6 +26,16 @@ export function activate(context: vscode.ExtensionContext) {
           if (stateMatch) {
             const attrValue = stateMatch[1];
             return provideStateCompletionItems(attrValue);
+          }
+
+          // Check for border or text-decoration properties
+          const propertyRegex =
+            /(?:border|border-left|border-top|border-right|border-bottom|outline|text-decoration)=["']([^"']*)$/;
+          const propertyMatch = lineText.match(propertyRegex);
+          if (propertyMatch) {
+            const attrName = propertyMatch[0].split('=')[0]; // Get the attribute name
+            const attrValue = propertyMatch[1]; // Get the attribute value
+            return providePropertyCompletionItems(attrName, attrValue);
           }
         },
       },

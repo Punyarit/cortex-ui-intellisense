@@ -2,20 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.provideStateCompletionItems = void 0;
 const vscode = require("vscode");
-const colors_1 = require("../constants/colors");
+const propertyValues_1 = require("../constants/propertyValues");
 // Step 1: Define a mapping between property names and their possible values.
 const propertyValuesMap = {
-    bg: colors_1.colors,
-    c: colors_1.colors,
+    bg: propertyValues_1.colors,
+    c: propertyValues_1.colors,
     shadow: ['1dp', '2dp', '4dp', '6dp', '8dp', '12dp', '20dp'],
     opacity: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
-    border: colors_1.borderValues,
-    'border-left': colors_1.borderValues,
-    'border-top': colors_1.borderValues,
-    'border-right': colors_1.borderValues,
-    'border-bottom': colors_1.borderValues,
-    outline: colors_1.borderValues,
-    'text-decoration': colors_1.allTextDecorationValues,
+    border: propertyValues_1.borderValues,
+    'border-left': propertyValues_1.borderValues,
+    'border-top': propertyValues_1.borderValues,
+    'border-right': propertyValues_1.borderValues,
+    'border-bottom': propertyValues_1.borderValues,
+    outline: propertyValues_1.borderValues,
+    'text-decoration': propertyValues_1.allTextDecorationValues,
 };
 // List of all available properties
 const propertyList = [
@@ -31,10 +31,6 @@ const propertyList = [
     'text-decoration',
     'opacity',
 ];
-function getTextDecorationSuggestions(currentValue) {
-    const usedValues = new Set(currentValue.split(' '));
-    return colors_1.allTextDecorationValues.filter((value) => !usedValues.has(value));
-}
 function getPropertyStringValue(attrValue, propName) {
     const match = attrValue.match(new RegExp(`${propName}:([^;]*)`));
     return (match && match[1].trim()) || '';
@@ -55,7 +51,7 @@ function provideStateCompletionItems(attrValue) {
     if (lastProperty === 'text-decoration') {
         const currentTextDecorationValue = getPropertyStringValue(attrValue, 'text-decoration');
         const currentTextDecorationValues = new Set(currentTextDecorationValue.split(' ').concat(lastValue.split(' ')));
-        const textDecorationSuggestions = colors_1.allTextDecorationValues.filter((value) => !currentTextDecorationValues.has(value));
+        const textDecorationSuggestions = propertyValues_1.allTextDecorationValues.filter((value) => !currentTextDecorationValues.has(value));
         return textDecorationSuggestions.map((suggestion) => new vscode.CompletionItem(suggestion, vscode.CompletionItemKind.Value));
     }
     if (lastProperty && !lastValue && propertyValuesMap[lastProperty]) {

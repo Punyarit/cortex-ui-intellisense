@@ -4,6 +4,7 @@ exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const provideBreakpointCompletionItems_1 = require("./providerCompletion/provideBreakpointCompletionItems");
 const provideStateCompletionItems_1 = require("./providerCompletion/provideStateCompletionItems");
+const providePropertyCompletionItems_1 = require("./providerCompletion/providePropertyCompletionItems"); // Assume this is the path to your function
 function activate(context) {
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider({ language: 'typescriptreact', scheme: 'file' }, {
         provideCompletionItems(document, position) {
@@ -14,7 +15,7 @@ function activate(context) {
             const breakpointMatch = lineText.match(breakpointRegex);
             if (breakpointMatch) {
                 const attrValue = breakpointMatch[1];
-                return (0, provideBreakpointCompletionItems_1.provideBreakpointCompletionItems)(attrValue); // Assuming this function is defined elsewhere
+                return (0, provideBreakpointCompletionItems_1.provideBreakpointCompletionItems)(attrValue);
             }
             // Check for state attributes
             const stateRegex = /(?:active|focus|focus-within|hover)=["']([^"']*)$/;
@@ -22,6 +23,14 @@ function activate(context) {
             if (stateMatch) {
                 const attrValue = stateMatch[1];
                 return (0, provideStateCompletionItems_1.provideStateCompletionItems)(attrValue);
+            }
+            // Check for border or text-decoration properties
+            const propertyRegex = /(?:border|border-left|border-top|border-right|border-bottom|outline|text-decoration)=["']([^"']*)$/;
+            const propertyMatch = lineText.match(propertyRegex);
+            if (propertyMatch) {
+                const attrName = propertyMatch[0].split('=')[0]; // Get the attribute name
+                const attrValue = propertyMatch[1]; // Get the attribute value
+                return (0, providePropertyCompletionItems_1.providePropertyCompletionItems)(attrName, attrValue);
             }
         },
     }, ' ', // Trigger character
