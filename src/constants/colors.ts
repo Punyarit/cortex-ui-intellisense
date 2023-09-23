@@ -80,3 +80,28 @@ const generateBorderValues = (borderStyles: ReadonlyArray<string>, colors: strin
 };
 
 export const borderValues = generateBorderValues(borderStyles, colors);
+
+type TextDecorationValues =
+  | 'dashed'
+  | 'dotted'
+  | 'double'
+  | 'line-through'
+  | 'overline'
+  | 'solid'
+  | 'underline'
+  | 'none';
+export const allTextDecorationValues: TextDecorationValues[] = [
+  'dashed',
+  'dotted',
+  'double',
+  'line-through',
+  'overline',
+  'solid',
+  'underline',
+  'none',
+];
+
+export const getTextDecorationSuggestions = (currentValue: string): TextDecorationValues[] => {
+  const usedValues = new Set(currentValue.split(' '));
+  return allTextDecorationValues.filter((value) => !usedValues.has(value));
+};

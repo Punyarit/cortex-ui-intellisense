@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { borderValues, colors } from '../constants/colors';
+import { allTextDecorationValues, borderValues, colors } from '../constants/colors';
 
 // Step 1: Define a mapping between property names and their possible values.
 const propertyValuesMap = {
@@ -13,24 +13,34 @@ const propertyValuesMap = {
   'border-right': borderValues,
   'border-bottom': borderValues,
   outline: borderValues,
-  // ... Add mappings for other properties here
+  'text-decoration': allTextDecorationValues,
 };
-export function provideStateCompletionItems(attrValue: string): vscode.CompletionItem[] {
-  // List of all available properties
-  const propertyList = [
-    'bg',
-    'c',
-    'outline',
-    'shadow',
-    'border',
-    'border-left',
-    'border-top',
-    'border-right',
-    'border-bottom',
-    'text-decoration',
-    'opacity',
-  ];
 
+// List of all available properties
+const propertyList = [
+  'bg',
+  'c',
+  'outline',
+  'shadow',
+  'border',
+  'border-left',
+  'border-top',
+  'border-right',
+  'border-bottom',
+  'text-decoration',
+  'opacity',
+];
+function getTextDecorationSuggestions(currentValue: string): string[] {
+  const usedValues = new Set(currentValue.split(' '));
+  return allTextDecorationValues.filter((value) => !usedValues.has(value));
+}
+
+function getPropertyStringValue(attrValue: string, propName: string): string {
+  const match = attrValue.match(new RegExp(`${propName}:([^;]*)`));
+  return (match && match[1].trim()) || '';
+}
+
+export function provideStateCompletionItems(attrValue: string): vscode.CompletionItem[] {
   // Parsing the attribute value to find out which properties have been used
   const usedProperties = new Set(
     attrValue
@@ -45,6 +55,20 @@ export function provideStateCompletionItems(attrValue: string): vscode.Completio
   // The last part of the attribute value to check if a property has been selected but not yet given a value
   const lastPart = attrValue.split(';').pop()?.trim() || '';
   const [lastProperty, lastValue] = lastPart.split(':').map((part) => part.trim());
+
+  // Special case for text-decoration
+  if (lastProperty === 'text-decoration') {
+    const currentTextDecorationValue = getPropertyStringValue(attrValue, 'text-decoration');
+    const currentTextDecorationValues = new Set(
+      currentTextDecorationValue.split(' ').concat(lastValue.split(' '))
+    );
+    const textDecorationSuggestions = allTextDecorationValues.filter(
+      (value) => !currentTextDecorationValues.has(value)
+    );
+    return textDecorationSuggestions.map(
+      (suggestion) => new vscode.CompletionItem(suggestion, vscode.CompletionItemKind.Value)
+    );
+  }
 
   if (lastProperty && !lastValue && propertyValuesMap[lastProperty]) {
     // If a property has been selected but not yet given a value, suggest values for that property

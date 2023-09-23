@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.borderValues = exports.colors = void 0;
+exports.getTextDecorationSuggestions = exports.allTextDecorationValues = exports.borderValues = exports.colors = void 0;
 const shades = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
 const colorNames = [
     'gray',
@@ -60,3 +60,18 @@ const generateBorderValues = (borderStyles, colors) => {
     return borderValues;
 };
 exports.borderValues = generateBorderValues(borderStyles, exports.colors);
+exports.allTextDecorationValues = [
+    'dashed',
+    'dotted',
+    'double',
+    'line-through',
+    'overline',
+    'solid',
+    'underline',
+    'none',
+];
+const getTextDecorationSuggestions = (currentValue) => {
+    const usedValues = new Set(currentValue.split(' '));
+    return exports.allTextDecorationValues.filter((value) => !usedValues.has(value));
+};
+exports.getTextDecorationSuggestions = getTextDecorationSuggestions;
