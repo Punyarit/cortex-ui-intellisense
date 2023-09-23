@@ -30,10 +30,6 @@ const propertyList = [
   'text-decoration',
   'opacity',
 ];
-function getTextDecorationSuggestions(currentValue: string): string[] {
-  const usedValues = new Set(currentValue.split(' '));
-  return allTextDecorationValues.filter((value) => !usedValues.has(value));
-}
 
 function getPropertyStringValue(attrValue: string, propName: string): string {
   const match = attrValue.match(new RegExp(`${propName}:([^;]*)`));
