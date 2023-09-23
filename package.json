@@ -10,7 +10,7 @@
   "activationEvents": ["onLanguage:typescriptreact"],
   "main": "./out/extension.js",
   "scripts": {
-    "compile": "tsc -p ./",
+    "compile": "rm -rf out && tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
