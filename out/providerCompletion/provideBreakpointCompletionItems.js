@@ -80,7 +80,7 @@ function provideBreakpointCompletionItems(attrValue) {
     });
     // Map suggestions to an array of CompletionItem objects
     const completionItems = suggestions.map((word) => {
-        const completionItem = new vscode.CompletionItem(word, vscode.CompletionItemKind.Text);
+        const completionItem = new vscode.CompletionItem(word, vscode.CompletionItemKind.Property);
         // For properties, append a colon
         if (propertyList.includes(word)) {
             completionItem.insertText = word + ':';
@@ -93,3 +93,5 @@ function provideBreakpointCompletionItems(attrValue) {
     return completionItems;
 }
 exports.provideBreakpointCompletionItems = provideBreakpointCompletionItems;
+const a = {};
+a;

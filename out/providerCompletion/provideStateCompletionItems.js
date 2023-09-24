@@ -32,6 +32,6 @@ function provideStateCompletionItems(attrValue) {
     }
     // If no property is being specified, or a property-value pair has just been completed,
     // suggest the remaining available properties
-    return availableProperties.map((prop) => new vscode.CompletionItem(prop, vscode.CompletionItemKind.Text));
+    return availableProperties.map((prop) => new vscode.CompletionItem(prop, vscode.CompletionItemKind.Property));
 }
 exports.provideStateCompletionItems = provideStateCompletionItems;

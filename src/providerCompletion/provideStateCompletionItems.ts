@@ -1,5 +1,9 @@
 import * as vscode from 'vscode';
-import { allTextDecorationValues, propertyStateValuesMap, propertyStatesList } from '../constants/propertyValues';
+import {
+  allTextDecorationValues,
+  propertyStateValuesMap,
+  propertyStatesList,
+} from '../constants/propertyValues';
 
 function getPropertyStringValue(attrValue: string, propName: string): string {
   const match = attrValue.match(new RegExp(`${propName}:([^;]*)`));
@@ -46,6 +50,6 @@ export function provideStateCompletionItems(attrValue: string): vscode.Completio
   // If no property is being specified, or a property-value pair has just been completed,
   // suggest the remaining available properties
   return availableProperties.map(
-    (prop) => new vscode.CompletionItem(prop, vscode.CompletionItemKind.Text)
+    (prop) => new vscode.CompletionItem(prop, vscode.CompletionItemKind.Property)
   );
 }
