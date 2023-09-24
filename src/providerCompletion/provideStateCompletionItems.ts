@@ -1,35 +1,5 @@
 import * as vscode from 'vscode';
-import { allTextDecorationValues, borderValues, colors } from '../constants/propertyValues';
-
-// Step 1: Define a mapping between property names and their possible values.
-const propertyValuesMap = {
-  bg: colors,
-  c: colors,
-  shadow: ['1dp', '2dp', '4dp', '6dp', '8dp', '12dp', '20dp'],
-  opacity: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
-  border: borderValues,
-  'border-left': borderValues,
-  'border-top': borderValues,
-  'border-right': borderValues,
-  'border-bottom': borderValues,
-  outline: borderValues,
-  'text-decoration': allTextDecorationValues,
-};
-
-// List of all available properties
-const propertyList = [
-  'bg',
-  'c',
-  'outline',
-  'shadow',
-  'border',
-  'border-left',
-  'border-top',
-  'border-right',
-  'border-bottom',
-  'text-decoration',
-  'opacity',
-];
+import { allTextDecorationValues, propertyStateValuesMap, propertyStatesList } from '../constants/propertyValues';
 
 function getPropertyStringValue(attrValue: string, propName: string): string {
   const match = attrValue.match(new RegExp(`${propName}:([^;]*)`));
@@ -46,7 +16,7 @@ export function provideStateCompletionItems(attrValue: string): vscode.Completio
   );
 
   // Filtering the property list to exclude used properties
-  const availableProperties = propertyList.filter((prop) => !usedProperties.has(prop));
+  const availableProperties = propertyStatesList.filter((prop) => !usedProperties.has(prop));
 
   // The last part of the attribute value to check if a property has been selected but not yet given a value
   const lastPart = attrValue.split(';').pop()?.trim() || '';
@@ -66,9 +36,9 @@ export function provideStateCompletionItems(attrValue: string): vscode.Completio
     );
   }
 
-  if (lastProperty && !lastValue && propertyValuesMap[lastProperty]) {
+  if (lastProperty && !lastValue && propertyStateValuesMap[lastProperty]) {
     // If a property has been selected but not yet given a value, suggest values for that property
-    return propertyValuesMap[lastProperty].map(
+    return propertyStateValuesMap[lastProperty].map(
       (value) => new vscode.CompletionItem(value, vscode.CompletionItemKind.Value)
     );
   }

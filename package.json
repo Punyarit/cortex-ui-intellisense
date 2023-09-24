@@ -1,7 +1,7 @@
 {
   "name": "cortex-ui-intellisense",
-  "displayName": "Cortex ui Intellisense",
-  "version": "1.0.0",
+  "displayName": "Cortex UI Intellisense",
+  "version": "1.0.1",
   "description": "Cortex UI Intellisense provider autocomplete to boxes element with states and breakpoints",
   "publisher": "Punyarit",
   "engines": {

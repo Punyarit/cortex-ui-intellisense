@@ -105,3 +105,74 @@ export const getTextDecorationSuggestions = (currentValue: string): TextDecorati
   const usedValues = new Set(currentValue.split(' '));
   return allTextDecorationValues.filter((value) => !usedValues.has(value));
 };
+
+const shadowValue = ['1dp', '2dp', '4dp', '6dp', '8dp', '12dp', '20dp'];
+const opacityValue = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'];
+const transformValue = [
+  'none',
+  'matrix(n,n,n,n,n,n)',
+  'matrix3d(n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n)',
+  'translate(x,y)',
+  'translate3d(x,y,z)',
+  'translateX(x)',
+  'translateY(y)',
+  'translateZ(z)',
+  'scale(x,y)',
+  'scale3d(x,y,z)',
+  'scaleX(x)',
+  'scaleY(y)',
+  'scaleZ(z)',
+  'rotate(angle)',
+  'rotate3d(x,y,z,angle)',
+  'rotateX(angle)',
+  'rotateY(angle)',
+  'rotateZ(angle)',
+  'skew(x-angle,y-angle)',
+  'skewX(angle)',
+  'skewY(angle)',
+  'perspective(n)',
+  'initial',
+  'inherit',
+];
+// List of all available properties
+export const propertyStatesList = [
+  'bg',
+  'c',
+  'shadow',
+  'opacity',
+  'border',
+  'border-left',
+  'border-top',
+  'border-right',
+  'border-bottom',
+  'outline',
+  'text-decoration',
+  'transform',
+];
+
+export const propertyStateValuesMap = {
+  bg: colors,
+  c: colors,
+  shadow: shadowValue,
+  opacity: opacityValue,
+  border: borderValues,
+  'border-left': borderValues,
+  'border-top': borderValues,
+  'border-right': borderValues,
+  'border-bottom': borderValues,
+  outline: borderValues,
+  'text-decoration': allTextDecorationValues,
+  transform: transformValue,
+};
+
+export const propertyValuesMap = {
+  border: borderValues,
+  'border-left': borderValues,
+  'border-top': borderValues,
+  'border-right': borderValues,
+  'border-bottom': borderValues,
+  outline: borderValues,
+  'text-decoration': allTextDecorationValues,
+  transform: transformValue,
+  transition: ['0.375s ease', '0.412s ease', '0.450s ease'],
+};

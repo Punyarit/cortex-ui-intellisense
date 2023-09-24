@@ -1,15 +1,5 @@
 import * as vscode from 'vscode';
-import { borderValues, allTextDecorationValues } from '../constants/propertyValues';
-
-const propertyValuesMap = {
-  border: borderValues,
-  'border-left': borderValues,
-  'border-top': borderValues,
-  'border-right': borderValues,
-  'border-bottom': borderValues,
-  outline: borderValues,
-  'text-decoration': allTextDecorationValues,
-};
+import { propertyValuesMap } from '../constants/propertyValues';
 
 export function providePropertyCompletionItems(
   attrName: string,

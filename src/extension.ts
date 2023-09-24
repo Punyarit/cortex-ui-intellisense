@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           // Check for border or text-decoration properties
           const propertyRegex =
-            /(?:border|border-left|border-top|border-right|border-bottom|outline|text-decoration)=["']([^"']*)$/;
+            /(?:border|border-left|border-top|border-right|border-bottom|outline|text-decoration|transform|transition)=["']([^"']*)$/;
           const propertyMatch = lineText.match(propertyRegex);
           if (propertyMatch) {
             const attrName = propertyMatch[0].split('=')[0]; // Get the attribute name
