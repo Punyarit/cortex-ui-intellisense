@@ -1,21 +1,31 @@
 {
-  "name": "my-extension",
-  "version": "0.0.1",
-  "description": "My VS Code Extension",
-  "publisher": "your-name",
+  "name": "cortex-ui-intellisense",
+  "displayName": "Cortex ui Intellisense",
+  "version": "1.0.0",
+  "description": "Cortex UI Intellisense provider autocomplete to boxes element with states and breakpoints",
+  "publisher": "Punyarit",
   "engines": {
-    "vscode": "^1.62.0"
+    "vscode": "^1.79.0"
   },
-  "categories": ["Other"],
-  "activationEvents": ["onLanguage:typescriptreact"],
+  "categories": [
+    "Snippets"
+  ],
+  "activationEvents": [
+    "onLanguage:typescriptreact"
+  ],
   "main": "./out/extension.js",
   "scripts": {
     "compile": "rm -rf out && tsc -p ./",
     "watch": "tsc -watch -p ./"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Punyarit/cortex-ui-intellisense.git"
+  },
   "devDependencies": {
     "@types/vscode": "^1.62.0",
     "@types/node": "^16.11.7",
     "typescript": "^4.4.3"
-  }
+  },
+  "license": "MIT"
 }
